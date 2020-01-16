@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Mvc.Models.MvcEmployerModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<p>
+    <a class="btn btn-default" href="@Url.Action("AddOrEdit","Employer")"><i class="fas fa-plus"></i>Create new</a>
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                <a href="@Url.Action("AddOrEdit" ,new {id= item.EmployerId })"> <i class="fas fa-pen"> Edit</i></a>
+                <a onclick="Delete(@item.EmployerId)" class="btn btn-default"><i class="fas fa-trash-alt btn btn-danger"> Delete</i></a>
+
+            </td>
+        </tr>
+    }
+
+</table>
+@section scripts{
+    <script>
+      var successMessage = '@TempData["SuccessMessage"]'
+
+      if (successMessage !="") {
+
+          alertify.success(successMessage);
+      }
+        function Delete(id)
+        {
+
+          alertify.confirm("Delete Confirmation", "Are you Sure", function ()
+          { window.location.href = '@Url.Action("Delete","Employer")/' + id }
+              , null
+          )
+        }
+
+
+    </script>
+
+}
